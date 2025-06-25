@@ -1,0 +1,20 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  gap: 15px;
+  padding: 20px;
+  background: white;
+  margin-top: 20px;
+  &__likes {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  &__like {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+}
