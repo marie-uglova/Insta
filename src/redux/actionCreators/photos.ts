@@ -4,9 +4,9 @@ export const GET_PHOTOS_SUCCESS = "GET_PHOTOS_SUCCESS";
 export const GET_PHOTOS_FAILED = "GET_PHOTOS_FAILED";
 export const GET_PHOTOS_STARTED = "GET_PHOTOS_STARTED";
 export const SET_PHOTOS_TOTAL = "SET_PHOTOS_TOTAL";
-export const MUTATE_PHOTOS_SUCCESS = "MUTATE_PHOTOS_SUCCESS";
-export const MUTATE_PHOTOS_FAILED = "MUTATE_PHOTOS_FAILED";
-export const MUTATE_PHOTOS_STARTED = "MUTATE_PHOTOS_STARTED";
+export const MUTATE_POSTS_SUCCESS = "MUTATE_POSTS_SUCCESS";
+export const MUTATE_POSTS_FAILED = "MUTATE_POSTS_FAILED";
+export const MUTATE_POSTS_STARTED = "MUTATE_POSTS_STARTED";
 
 export interface GetPhotosSuccessAction {
     type: typeof GET_PHOTOS_SUCCESS;
@@ -27,17 +27,17 @@ export interface SetPhotosTotalAction {
     payload: number;
 }
 
-export interface MutatePhotosSuccessAction {
-    type: typeof MUTATE_PHOTOS_SUCCESS;
+export interface MutatePostsSuccessAction {
+    type: typeof MUTATE_POSTS_SUCCESS;
 }
 
-export interface MutatePhotosFailedAction {
-    type: typeof MUTATE_PHOTOS_FAILED;
+export interface MutatePostsFailedAction {
+    type: typeof MUTATE_POSTS_FAILED;
     payload: Error;
 }
 
-export interface MutatePhotosStartedAction {
-    type: typeof MUTATE_PHOTOS_STARTED;
+export interface MutatePostsStartedAction {
+    type: typeof MUTATE_POSTS_STARTED;
 }
 
 export const getPhotosSuccess = (photos: CardProps[]): GetPhotosSuccessAction => ({
@@ -59,15 +59,15 @@ export const setPhotosTotal = (total: number): SetPhotosTotalAction => ({
     payload: total
 });
 
-export const mutatePhotosSuccess = (): MutatePhotosSuccessAction => ({
-    type: MUTATE_PHOTOS_SUCCESS
+export const mutatePostsSuccess = (): MutatePostsSuccessAction => ({
+    type: MUTATE_POSTS_SUCCESS
 });
 
-export const mutatePhotosFailed = (error: Error): MutatePhotosFailedAction => ({
-    type: MUTATE_PHOTOS_FAILED,
+export const mutatePostsFailed = (error: Error): MutatePostsFailedAction => ({
+    type: MUTATE_POSTS_FAILED,
     payload: error
 });
 
-export const mutatePhotosStarted = (): MutatePhotosStartedAction => ({
-    type: MUTATE_PHOTOS_STARTED
+export const mutatePostsStarted = (): MutatePostsStartedAction => ({
+    type: MUTATE_POSTS_STARTED
 });

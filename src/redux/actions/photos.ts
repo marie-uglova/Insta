@@ -3,7 +3,9 @@ import {ThunkAction} from "redux-thunk";
 import {api} from "@api/index";
 import {RootState} from "../store";
 import {CardProps} from "@components/Card";
-import {getPhotosStarted, getPhotosSuccess, getPhotosFailed, setPhotosTotal, mutatePhotosSuccess, mutatePhotosFailed, mutatePhotosStarted} from "../actionCreators/photos";
+import {getPhotosStarted, getPhotosSuccess, getPhotosFailed, setPhotosTotal, mutatePostsSuccess, mutatePostsFailed, mutatePostsStarted} from "../actionCreators/photos";
+import {getPhotoFromState, getUpdatedPhoto} from "@redux/utils";
+import {nanoid} from "nanoid";
 
 export const getPhotos = (page: number = 1): ThunkAction<Promise<void>, RootState, unknown, AnyAction> => {
     return async(dispatch, getState) => {
@@ -40,51 +42,71 @@ export const getPhotos = (page: number = 1): ThunkAction<Promise<void>, RootStat
     }
 }
 
-export const mutatePhoto = (userId: number, photoId: number): ThunkAction<Promise<void>, RootState, unknown, AnyAction> => {
+export const toggleLike = (id: number, photoId: number): ThunkAction<Promise<void>, RootState, unknown, AnyAction> => {
     return async(dispatch, getState) => {
 
-        dispatch(mutatePhotosStarted());
+        dispatch(mutatePostsStarted());
 
         const store = getState();
-        const photo = store.photos.photos.find(item => item.id === photoId);
+        const newPhoto = getPhotoFromState(store.photos.photos, photoId);
 
-        if (!photo) {
+        if (!newPhoto) {
             const error = new Error(`Фото с id ${photoId} не найдено`);
-            dispatch(mutatePhotosFailed(error));
+
+            dispatch(mutatePostsFailed(error));
             return;
         }
 
-        const newPhoto = {
-            ...photo,
-            likes: [...photo.likes]
-        };
-
-        if(newPhoto.likes.includes(userId)) {
-            newPhoto.likes = newPhoto.likes.filter(el => el !== userId);
+        if(newPhoto.likes.includes(id)) {
+            newPhoto.likes = newPhoto.likes.filter(el => el !== id);
         } else {
-            newPhoto.likes.push(userId);
+            newPhoto.likes.push(id);
         }
 
         try {
-            const response = await api.users.mutatePhoto({
+            const response = await api.users.mutatePosts({
                 data: newPhoto,
                 url: `/${photoId}`
             })
 
-            const newPhotos = [...store.photos.photos];
-            const photoIndex = newPhotos.findIndex(item => item.id === photoId);
+            const newPhotos = getUpdatedPhoto(store.photos.photos, photoId, response.data);
 
-            if (photoIndex !== -1) {
-                newPhotos[photoIndex] = response.data;
-                dispatch(getPhotosSuccess(newPhotos));
-                dispatch(mutatePhotosSuccess());
-            } else {
-                throw new Error(`Фото с id ${photoId} не найдено в массиве`);
-            }
+            dispatch(getPhotosSuccess(newPhotos));
+            dispatch(mutatePostsSuccess());
         }
         catch (error) {
             const errorMessage = error instanceof Error ? error : new Error("Неизвестная ошибка");
-            dispatch(mutatePhotosFailed(errorMessage));
+            dispatch(mutatePostsFailed(errorMessage));
         }
+    }
+}
+
+export const sendComment = (nickname: string, photoId: number, text: string): ThunkAction<void, RootState, unknown, AnyAction> => {
+    return async(dispatch, getState) => {
+
+        dispatch(mutatePostsStarted());
+
+        const store = getState();
+        const newPhoto = getPhotoFromState(store.photos.photos, photoId);
+        const commentId = nanoid();
+
+        if (!newPhoto) {
+            dispatch(mutatePostsFailed(new Error("Фото не найдено")));
+            return;
+        }
+
+        newPhoto.comments.push({commentId, nickname, text});
+
+        try {
+            await api.users.mutatePosts({
+                data: newPhoto,
+                url: `/${photoId}`
+            });
+            dispatch(mutatePostsSuccess());
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error : new Error("Неизвестная ошибка");
+            dispatch(mutatePostsFailed(errorMessage));
+        }
+
     }
 }

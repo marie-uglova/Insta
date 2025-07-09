@@ -3,16 +3,16 @@ import {useNavigate} from "react-router-dom";
 import s from "./UserBadge.module.scss";
 
 export type UserBadgeProps = {
-    userId: number
+    id: number
     nickname: string
     avatarUrl?: string
 }
 
-export const UserBadge:FC<UserBadgeProps> = ({nickname, avatarUrl, userId}) => {
+export const UserBadge:FC<UserBadgeProps> = ({nickname, avatarUrl, id}) => {
     const navigate = useNavigate();
 
     const onUserBadgeClick = ():void => {
-        navigate(`/${userId}`);
+        navigate(`/${id}`);
     }
 
     return (

@@ -2,7 +2,7 @@ import {FC} from "react";
 import s from "./Comment.module.scss";
 
 export type CommentProps = {
-    commentId: number
+    commentId: string
     nickname: string
     text: string
 }

@@ -12,7 +12,7 @@ export const getPhotos = (config: AxiosRequestConfig) => {
     })
 };
 
-export const mutatePhoto = (config: AxiosRequestConfig) => {
+export const mutatePosts = (config: AxiosRequestConfig) => {
     const {url, ...restConfig} = config;
 
     return makeRequest<CardProps>({

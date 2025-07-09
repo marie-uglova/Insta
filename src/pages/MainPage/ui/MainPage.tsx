@@ -4,7 +4,7 @@ import {ThunkDispatch} from "redux-thunk";
 import {useDispatch, useSelector} from "react-redux";
 import {Layout} from "@components/Layout";
 import {Card} from "@components/Card";
-import {getPhotos, mutatePhoto} from "@redux/actions/photos";
+import {getPhotos, toggleLike} from "@redux/actions/photos";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {ClipLoader} from "react-spinners";
 import {RootState} from "@redux/store";
@@ -40,7 +40,7 @@ export const MainPage: FC = () => {
 
     const onLikeClick = (photoId: number): void => {
         if (!authorisedUser) return;
-        dispatch(mutatePhoto(authorisedUser.userId, photoId));
+        dispatch(toggleLike(authorisedUser.id, photoId));
     }
 
     useEffect(() => {
@@ -56,7 +56,7 @@ export const MainPage: FC = () => {
     }
 
     return (
-        <Layout nickname={authorisedUser.nickname} id={authorisedUser.userId} avatarUrl={authorisedUser.avatarUrl}>
+        <Layout nickname={authorisedUser.nickname} id={authorisedUser.id} avatarUrl={authorisedUser.avatarUrl}>
             <div className="container">
                 {loading ? <Loader color="green" /> : <InfiniteScroll
                     dataLength={photos.length}
@@ -70,7 +70,7 @@ export const MainPage: FC = () => {
                                 author={author}
                                 imgUrl={imgUrl}
                                 likes={likes}
-                                isLikedByYou={likes.includes(authorisedUser.userId)}
+                                isLikedByYou={likes.includes(authorisedUser.id)}
                                 comments={comments}
                                 onLikeClick={onLikeClick} />
                         ))}

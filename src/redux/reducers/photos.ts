@@ -1,6 +1,6 @@
 import {
-    GET_PHOTOS_STARTED, GET_PHOTOS_SUCCESS, GET_PHOTOS_FAILED, SET_PHOTOS_TOTAL, MUTATE_PHOTOS_STARTED, MUTATE_PHOTOS_FAILED, MUTATE_PHOTOS_SUCCESS,
-    GetPhotosSuccessAction, GetPhotosFailedAction, GetPhotosStartedAction, SetPhotosTotalAction, MutatePhotosSuccessAction, MutatePhotosFailedAction, MutatePhotosStartedAction
+    GET_PHOTOS_STARTED, GET_PHOTOS_SUCCESS, GET_PHOTOS_FAILED, SET_PHOTOS_TOTAL, MUTATE_POSTS_STARTED, MUTATE_POSTS_FAILED, MUTATE_POSTS_SUCCESS,
+    GetPhotosSuccessAction, GetPhotosFailedAction, GetPhotosStartedAction, SetPhotosTotalAction, MutatePostsSuccessAction, MutatePostsFailedAction, MutatePostsStartedAction
 } from "../actionCreators/photos";
 import {CardProps} from "@components/Card";
 
@@ -9,22 +9,22 @@ type PhotosActionTypes =
     | GetPhotosFailedAction
     | GetPhotosStartedAction
     | SetPhotosTotalAction
-    | MutatePhotosSuccessAction
-    | MutatePhotosFailedAction
-    | MutatePhotosStartedAction;
+    | MutatePostsSuccessAction
+    | MutatePostsFailedAction
+    | MutatePostsStartedAction;
 
 export interface PhotosState {
     photos: CardProps[];
     isPhotoLoading: boolean;
     totalPhotos: number;
-    isMutateLoading: boolean;
+    isMutatePostsLoading: boolean;
 }
 
 const initialState: PhotosState = {
     photos: [],
     isPhotoLoading: true,
     totalPhotos: 0,
-    isMutateLoading: false
+    isMutatePostsLoading: false
 }
 
 export const photosReducer = (state: PhotosState = initialState, action: PhotosActionTypes): PhotosState => {
@@ -54,22 +54,22 @@ export const photosReducer = (state: PhotosState = initialState, action: PhotosA
                 totalPhotos: action.payload
             };
 
-        case MUTATE_PHOTOS_STARTED:
+        case MUTATE_POSTS_STARTED:
             return {
                 ...state,
-                isMutateLoading: true
+                isMutatePostsLoading: true
             };
 
-        case MUTATE_PHOTOS_FAILED:
+        case MUTATE_POSTS_FAILED:
             return {
                 ...state,
-                isMutateLoading: false
+                isMutatePostsLoading: false
             };
 
-        case MUTATE_PHOTOS_SUCCESS:
+        case MUTATE_POSTS_SUCCESS:
             return {
                 ...state,
-                isMutateLoading: false
+                isMutatePostsLoading: false
             };
 
         default: {
