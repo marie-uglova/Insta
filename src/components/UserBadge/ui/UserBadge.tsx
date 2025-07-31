@@ -3,9 +3,17 @@ import {useNavigate} from "react-router-dom";
 import s from "./UserBadge.module.scss";
 
 export type UserBadgeProps = {
-    id: number
+    id: string
     nickname: string
     avatarUrl?: string
+    description?: string
+    firstName?: string
+    lastName?: string
+    url?: string
+    subscribers?: number[]
+    subscribed?: number[]
+    isMyPage?: boolean
+    isSubscribed?: boolean
 }
 
 export const UserBadge:FC<UserBadgeProps> = ({nickname, avatarUrl, id}) => {

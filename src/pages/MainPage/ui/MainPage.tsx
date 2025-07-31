@@ -38,7 +38,7 @@ export const MainPage: FC = () => {
         setPage(prevPage => prevPage + 1);
     }
 
-    const onLikeClick = (photoId: number): void => {
+    const onLikeClick = (photoId: string): void => {
         if (!authorisedUser) return;
         dispatch(toggleLike(authorisedUser.id, photoId));
     }
@@ -56,7 +56,7 @@ export const MainPage: FC = () => {
     }
 
     return (
-        <Layout nickname={authorisedUser.nickname} id={authorisedUser.id} avatarUrl={authorisedUser.avatarUrl}>
+        <Layout id={authorisedUser.id} nickname={authorisedUser.nickname} avatarUrl={authorisedUser.avatarUrl}>
             <div className="container">
                 {loading ? <Loader color="green" /> : <InfiniteScroll
                     dataLength={photos.length}

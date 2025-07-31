@@ -1,12 +1,12 @@
 import {CardProps} from "@components/Card";
 
-export const getPhotoFromState = (photos: CardProps[], photoId: number): CardProps | undefined => {
+export const getPhotoFromState = (photos: CardProps[], photoId: string): CardProps | undefined => {
     const photo = photos.find(item => item.id === photoId);
 
     return photo ? { ...photo, likes: [...photo.likes] } : undefined;
 }
 
-export const getUpdatedPhoto = (photos: CardProps[], photoId: number, data: CardProps): CardProps[] => {
+export const getUpdatedPhoto = (photos: CardProps[], photoId: string, data: CardProps): CardProps[] => {
     const newPhotos = [...photos];
     const photoIndex = newPhotos.findIndex(item => item.id === photoId);
 

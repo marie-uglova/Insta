@@ -7,7 +7,7 @@ export const Navbar: FC<UserBadgeProps> = ({nickname, avatarUrl, id}) => {
         <div className={s["navbar"]}>
             <div className="container">
                 <div className={s["navbar__inner"]}>
-                    <div className={s["navbar__logo"]}>Привет!</div>
+                    <a href="/" className={s["navbar__logo"]}>Привет!</a>
                     <UserBadge nickname={nickname} avatarUrl={avatarUrl} id={id} />
                 </div>
             </div>

@@ -4,7 +4,7 @@ import {Navbar} from "@components/Navbar";
 type LayoutProps = {
     nickname: string
     avatarUrl?: string
-    id: number
+    id: string
     children: ReactNode
 }
 

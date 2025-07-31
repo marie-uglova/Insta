@@ -8,13 +8,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState, AppThunkDispatch} from "@redux/store";
 
 export type CardProps = {
-    id: number
+    id: string
     author: UserBadgeProps
     imgUrl: string
     isLikedByYou: boolean
     comments: CommentProps[]
     likes: number[]
-    onLikeClick: (id: number) => void
+    onLikeClick: (id: string) => void
 }
 
 export const Card:FC<CardProps> = ({id, author, imgUrl, isLikedByYou, comments, likes, onLikeClick}) => {
@@ -44,7 +44,7 @@ export const Card:FC<CardProps> = ({id, author, imgUrl, isLikedByYou, comments, 
         }
     };
 
-    const onCommentSubmit = (photoId: number, comment: string) => {
+    const onCommentSubmit = (photoId: string, comment: string) => {
         if (!authorisedUser) {
             console.error('Пользователь не авторизован');
             return;

@@ -42,7 +42,7 @@ export const getPhotos = (page: number = 1): ThunkAction<Promise<void>, RootStat
     }
 }
 
-export const toggleLike = (id: number, photoId: number): ThunkAction<Promise<void>, RootState, unknown, AnyAction> => {
+export const toggleLike = (id: string, photoId: string): ThunkAction<Promise<void>, RootState, unknown, AnyAction> => {
     return async(dispatch, getState) => {
 
         dispatch(mutatePostsStarted());
@@ -81,7 +81,7 @@ export const toggleLike = (id: number, photoId: number): ThunkAction<Promise<voi
     }
 }
 
-export const sendComment = (nickname: string, photoId: number, text: string): ThunkAction<void, RootState, unknown, AnyAction> => {
+export const sendComment = (nickname: string, photoId: string, text: string): ThunkAction<void, RootState, unknown, AnyAction> => {
     return async(dispatch, getState) => {
 
         dispatch(mutatePostsStarted());
